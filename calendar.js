@@ -143,7 +143,7 @@ class Calendar {
         this.setDates(m, y, d);
 
     }
-    //  to do -> add buttons, cards
+
     createButtons(){
         let $btnNext = $('<button id = \'next\'>Next</button>');
         let $btnPrevious = $('<button id = \'previous\'>Previous</button>');
@@ -151,7 +151,7 @@ class Calendar {
 
         let curr_month = this.curr_mon;
         let curr_year = this.curr_year;
-        let newMonth = this.setNewMonth;
+        const newMonth = this.setNewMonth.bind(this);
         let baseEl = this.baseEl;
         $('#next').on('click',function (e) {
             curr_month++;
@@ -159,9 +159,8 @@ class Calendar {
                 curr_year++;
                 curr_month = 0;
             }
-            ///////////
             newMonth(baseEl, curr_month, curr_year);
-            ////////////
+
         })
         $('#previous').on('click',function (e) {
             curr_month--;
@@ -175,7 +174,7 @@ class Calendar {
     setNewMonth(base, month, year){
         $('.box h1').remove();
         $('.'+base).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
-
+        console.log("BASE: "+this.baseEl);
         $('td').each(function () {
             $('td').text('');
         })
