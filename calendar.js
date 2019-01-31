@@ -6,6 +6,9 @@ class Calendar {
         this.today_month = this.date_obj.getMonth();
         this.today_year = this.date_obj.getFullYear();
 
+        //  current values
+        this.curr_mon = null;
+        this.curr_year = null;
     }
 
     //  append DOM with new table
@@ -74,7 +77,6 @@ class Calendar {
             '        <td></td>\n' +
             '    </tr>\n' +
             '</table>');
-        $('.'+base).append('<h1>' + year + '  ' + Calendar.month_name[month] + ', '+ date + '</h1>');
         $("."+base).append($new_el);
         $('td').css({
             'border': '2px solid black',
@@ -95,6 +97,8 @@ class Calendar {
         return first_day;
     }
     setDates(month, year, date){
+        $('.'+this.baseEl).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + ', '+ date + '</h1>');
+
         let number = 1;
         let m = month;
         let y = year;
@@ -130,11 +134,39 @@ class Calendar {
             y = year;
             d = date;
         }
+
+        this.curr_mon = m;
+        this.curr_year = y;
+
         this.createTable(this.baseEl, m, y, d);
+        this.createButtons();
+
         this.setDates(m, y, d);
 
     }
     //  to do -> add buttons, cards
+    createButtons(){
+        let $btnNext = $('<button id = \'next\'>Next</button>');
+        let $btnPrevious = $('<button id = \'previous\'>Previous</button>');
+        $('.'+this.baseEl).after($btnPrevious, $btnNext);
+
+        let curr_month = this.curr_mon;
+        let curr_year = this.curr_year;
+
+        $('#next').on('click',function (e) {
+        })
+        $('#previous').on('click',function (e) {
+            alert('m: ' + curr_month + ' y: ' + curr_year);
+        })
+    }
+    updateCalendar(m, y, baseEl){
+        // alert(this.baseEl);
+        // $('.' + this.baseEl).prepend('<h1>' + y + '  ' + Calendar.month_name[m] + ', '+ date + '</h1>');
+
+        $('td').each(function (index) {
+            $(this).text('');
+        })
+    }
 
 
 }
@@ -143,4 +175,4 @@ Calendar.month_name = ['January','February','March','April','May','June','July',
 
 
 let cal = new Calendar('box');
-cal.createCalendar(1,2019, 1);
+cal.createCalendar(2,2019,19);
