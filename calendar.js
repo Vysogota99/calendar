@@ -112,10 +112,6 @@ class Calendar {
             }else if(index >= 7 + Calendar.day_name.indexOf(d) && index < tmp + 7 + Calendar.day_name.indexOf(d)){
                 $(this).text(number++);
             }
-            if(index == today_date_index){
-                $(this).css('background-color', '#232323');
-                $(this).css('color', '#fff');
-            }
         })
     }
     //  Creating DOM element - table and setting dates
@@ -172,12 +168,12 @@ class Calendar {
         })
     }
     setNewMonth(base, month, year){
+        $('td').each(function () {
+            $(this).text('');
+        })
+        this.setDates(month, year, 1);
         $('.box h1').remove();
         $('.'+base).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
-        console.log("BASE: "+this.baseEl);
-        $('td').each(function () {
-            $('td').text('');
-        })
     }
 
 }
