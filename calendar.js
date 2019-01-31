@@ -106,7 +106,6 @@ class Calendar {
         let d = this.getFirstDayName(m, y);
         let tmp = this.getDaysInMonth(m, y)
         let today_date_index = 6 + Calendar.day_name.indexOf(d) + date;
-        console.log('Position in table: ' + today_date_index);
         $('td').each(function (index) {
             if(index < 7){
                 $(this).text(Calendar.day_name[index]);
@@ -152,22 +151,35 @@ class Calendar {
 
         let curr_month = this.curr_mon;
         let curr_year = this.curr_year;
-
+        let newMonth = this.setNewMonth;
+        let baseEl = this.baseEl;
         $('#next').on('click',function (e) {
+            curr_month++;
+            if(curr_month == 12){
+                curr_year++;
+                curr_month = 0;
+            }
+            ///////////
+            newMonth(baseEl, curr_month, curr_year);
+            ////////////
         })
         $('#previous').on('click',function (e) {
-            alert('m: ' + curr_month + ' y: ' + curr_year);
+            curr_month--;
+            if(curr_month == -1){
+                curr_year--;
+                curr_month = 11;
+            }
+            newMonth(baseEl, curr_month, curr_year);
         })
     }
-    updateCalendar(m, y, baseEl){
-        // alert(this.baseEl);
-        // $('.' + this.baseEl).prepend('<h1>' + y + '  ' + Calendar.month_name[m] + ', '+ date + '</h1>');
+    setNewMonth(base, month, year){
+        $('.box h1').remove();
+        $('.'+base).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
 
-        $('td').each(function (index) {
-            $(this).text('');
+        $('td').each(function () {
+            $('td').text('');
         })
     }
-
 
 }
 Calendar.day_name = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -175,4 +187,4 @@ Calendar.month_name = ['January','February','March','April','May','June','July',
 
 
 let cal = new Calendar('box');
-cal.createCalendar(2,2019,19);
+cal.createCalendar();
