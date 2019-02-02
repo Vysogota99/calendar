@@ -1,4 +1,4 @@
-class Calendar {
+export default class Calendar {
     constructor(base){
         this.baseEl = base;
         this.date_obj = new Date();
