@@ -1,4 +1,4 @@
-export default class Calendar {
+class Calendar {
     constructor(base){
         this.baseEl = base;
         this.date_obj = new Date();
@@ -146,7 +146,6 @@ export default class Calendar {
         this.setDates(m, y, d);
 
     }
-
     createButtons(){
         let $btnNext = $('<button id = \'next\'>Next</button>');
         let $btnPrevious = $('<button id = \'previous\'>Previous</button>');
@@ -198,8 +197,6 @@ export default class Calendar {
         }
     }
 }
-
-
 Calendar.day_name = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 Calendar.month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
