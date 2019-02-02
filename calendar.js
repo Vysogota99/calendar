@@ -6,6 +6,8 @@ class Calendar {
         this.today_month = this.date_obj.getMonth();
         this.today_year = this.date_obj.getFullYear();
 
+        this.setEvents();
+        this.dataStorage = new Map();
         //  current values
         this.curr_mon = null;
         this.curr_year = null;
@@ -13,7 +15,6 @@ class Calendar {
 
     //  append DOM with new table
     createTable(base, month, year, date){
-        console.log(month + ' ' + year + ' ' + date)
         let $new_el = $('<table>\n' +
             '    <tr>\n' +
             '        <td></td>\n' +
@@ -175,7 +176,8 @@ class Calendar {
         $('.box h1').remove();
         $('.'+base).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
     }
-
+    //  add events to dates
+    
 }
 Calendar.day_name = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 Calendar.month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -183,3 +185,21 @@ Calendar.month_name = ['January','February','March','April','May','June','July',
 
 let cal = new Calendar('box');
 cal.createCalendar();
+
+$('td').on('click', function (e) {
+    let date_day = e.target.textContent;
+    if(date_day > 0 && date_day <= 31){
+        let string = $('.box h1').text();
+        let date_arr = string.split(' ');
+        let date_year = date_arr[0];
+        let date_month = null;
+        if(date_arr[2].slice(-1) === ',') {
+           date_month = date_arr[2].slice(0, -1);
+        }else{
+           date_month = date_arr[2];
+        }
+         // key of map in format dd.mm.yyyy
+        let key = date_day + '.' + Calendar.month_name.indexOf(date_month) + '.' + date_year;
+        cal.dataStorage.set(key, 'Empty message!');
+    }
+})
