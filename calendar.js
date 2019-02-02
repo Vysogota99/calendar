@@ -5,9 +5,10 @@ class Calendar {
         this.today_date = this.date_obj.getDate();
         this.today_month = this.date_obj.getMonth();
         this.today_year = this.date_obj.getFullYear();
-
-        this.setEvents();
-        this.dataStorage = new Map();
+        this.dataStorage = new Map([
+            ['2.1.2019','Rode to Vladimir'],
+            ['4.1.2019','Train in jim!']
+        ]);
         //  current values
         this.curr_mon = null;
         this.curr_year = null;
@@ -98,7 +99,7 @@ class Calendar {
         return first_day;
     }
     setDates(month, year, date){
-        $('.'+this.baseEl).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + ', '+ date + '</h1>');
+        $('.'+this.baseEl).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
 
         let number = 1;
         let m = month;
@@ -176,9 +177,19 @@ class Calendar {
         $('.box h1').remove();
         $('.'+base).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
     }
-    //  add events to dates
-    
+    getDateStorage(){
+        console.log(this.dataStorage);
+    }
+    setNoteToDateStorage(date, note){
+        this.dataStorage.set(date, note);
+    }
+    getNoteFromDateStorage(date){
+        return this.dataStorage.get(date);
+    }
+
 }
+
+
 Calendar.day_name = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 Calendar.month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -192,14 +203,10 @@ $('td').on('click', function (e) {
         let string = $('.box h1').text();
         let date_arr = string.split(' ');
         let date_year = date_arr[0];
-        let date_month = null;
-        if(date_arr[2].slice(-1) === ',') {
-           date_month = date_arr[2].slice(0, -1);
-        }else{
-           date_month = date_arr[2];
-        }
+        let date_month = date_arr[2];
+
          // key of map in format dd.mm.yyyy
         let key = date_day + '.' + Calendar.month_name.indexOf(date_month) + '.' + date_year;
-        cal.dataStorage.set(key, 'Empty message!');
+        console.log(cal.getNoteFromDateStorage(key));
     }
 })
