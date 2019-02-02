@@ -107,12 +107,17 @@ class Calendar {
 
         let d = this.getFirstDayName(m, y);
         let tmp = this.getDaysInMonth(m, y)
-        let today_date_index = 6 + Calendar.day_name.indexOf(d) + date;
+        // let today_date_index = 6 + Calendar.day_name.indexOf(d) + date;
+        const putLabel_ = this.putLabel.bind(this);
+
         $('td').each(function (index) {
             if(index < 7){
                 $(this).text(Calendar.day_name[index]);
             }else if(index >= 7 + Calendar.day_name.indexOf(d) && index < tmp + 7 + Calendar.day_name.indexOf(d)){
-                $(this).text(number++);
+                $(this).text(number);
+                let string = number + '.' + month  + '.' + year;    //  string in format dd.mm.yyyy
+                putLabel_(string, $(this));
+                number+=1;
             }
         })
     }
@@ -172,6 +177,7 @@ class Calendar {
     setNewMonth(base, month, year){
         $('td').each(function () {
             $(this).text('');
+            $(this).css('background-color','#fff');
         })
         this.setDates(month, year, 1);
         $('.box h1').remove();
@@ -180,13 +186,17 @@ class Calendar {
     getDateStorage(){
         console.log(this.dataStorage);
     }
-    setNoteToDateStorage(date, note){
+    setNoteToDataStorage(date, note){
         this.dataStorage.set(date, note);
     }
-    getNoteFromDateStorage(date){
+    getNoteFromDataStorage(date){
         return this.dataStorage.get(date);
     }
-
+    putLabel(date, $obj){
+        if(this.dataStorage.has(date)){
+            $obj.css('background-color', 'red');
+        }
+    }
 }
 
 
@@ -207,6 +217,6 @@ $('td').on('click', function (e) {
 
          // key of map in format dd.mm.yyyy
         let key = date_day + '.' + Calendar.month_name.indexOf(date_month) + '.' + date_year;
-        console.log(cal.getNoteFromDateStorage(key));
+        console.log(cal.getNoteFromDataStorage(key));
     }
 })
