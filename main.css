@@ -1,5 +1,7 @@
 body{
     background-color: #1f1f1f;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 .wrapper{
     padding-top: 150px;
@@ -45,4 +47,8 @@ h2{
 }
 .calendar_btn:hover{
     color: #4f4f4f;
+}
+.noted:hover{
+    cursor: pointer;
+    border: 1px solid red;
 }

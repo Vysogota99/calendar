@@ -194,6 +194,7 @@ class Calendar {
     putLabel(date, $obj){
         if(this.dataStorage.has(date)){
             $obj.css('background-color', '#e03a3a');
+            $obj.attr('class', 'noted');
         }else{
             $obj.css('background-color', '#1f1f1f');
         }
