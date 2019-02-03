@@ -1,0 +1,48 @@
+body{
+    background-color: #1f1f1f;
+}
+.wrapper{
+    padding-top: 150px;
+    display: flex;
+    justify-content: center;
+}
+h2{
+    color: white;
+}
+.calendar{
+    min-height: 100vh;
+    background-color: #1f1f1f;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.box h1{
+    font-size: 4rem;
+    color: #ffff;
+}
+.box td{
+    border: none;
+    color:#fff;
+    transition: 1s;
+    border: 1px solid #1f1f1f;
+}
+.date_in_calendar{
+    cursor: pointer;
+}
+.date_in_calendar:hover{
+    border: 1px solid #ffff;
+}
+.calendar_btn{
+    margin-top: 60px;
+    font-size: 3rem;
+    color: #fff;
+    border: none;
+    height: 75px;
+    background-color: #1f1f1f;
+    cursor: pointer;
+    transition: .2s;
+}
+.calendar_btn:hover{
+    color: #4f4f4f;
+}
