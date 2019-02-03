@@ -199,6 +199,11 @@ class Calendar {
             $obj.css('background-color', '#1f1f1f');
         }
     }
+    toJSON(){
+        return JSON.stringify(...this.dataStorage)
+
+    }
+
 }
 Calendar.day_name = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 Calendar.month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -217,5 +222,6 @@ $('td').on('click', function (e) {
 
          // key of map in format dd.mm.yyyy
         let key = date_day + '.' + Calendar.month_name.indexOf(date_month) + '.' + date_year;
+        cal.toJSON();
     }
 })
