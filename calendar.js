@@ -81,10 +81,8 @@ class Calendar {
             '</table>');
         $("."+base).append($new_el);
         $('td').css({
-            'border': '2px solid black',
             'padding': '20px',
-            'cursor': 'pointer',
-            'transition': '.1s',
+            'transition': '.2s',
             'text-align': 'center'
         });
     }
@@ -107,13 +105,14 @@ class Calendar {
 
         let d = this.getFirstDayName(m, y);
         let tmp = this.getDaysInMonth(m, y)
-        // let today_date_index = 6 + Calendar.day_name.indexOf(d) + date;
         const putLabel_ = this.putLabel.bind(this);
 
         $('td').each(function (index) {
             if(index < 7){
+                $(this).attr('class', 'day_of_the_week');
                 $(this).text(Calendar.day_name[index]);
             }else if(index >= 7 + Calendar.day_name.indexOf(d) && index < tmp + 7 + Calendar.day_name.indexOf(d)){
+                $(this).attr('class', 'date_in_calendar')
                 $(this).text(number);
                 let string = number + '.' + month  + '.' + year;    //  string in format dd.mm.yyyy
                 putLabel_(string, $(this));
@@ -147,8 +146,8 @@ class Calendar {
 
     }
     createButtons(){
-        let $btnNext = $('<button id = \'next\'>Next</button>');
-        let $btnPrevious = $('<button id = \'previous\'>Previous</button>');
+        let $btnNext = $('<button id = \'next\' class=\'calendar_btn\'><i class="fas fa-chevron-up"></i></button>');
+        let $btnPrevious = $('<button id = \'previous\' class=\'calendar_btn\'><i class="fas fa-chevron-down"></i></button>');
         $('.'+this.baseEl).after($btnPrevious, $btnNext);
 
         let curr_month = this.curr_mon;
@@ -176,10 +175,11 @@ class Calendar {
     setNewMonth(base, month, year){
         $('td').each(function () {
             $(this).text('');
-            $(this).css('background-color','#fff');
+            $(this).removeAttr('class');
+            $(this).css('background-color','#1f1f1f1');
         })
         this.setDates(month, year, 1);
-        $('.box h1').remove();
+        $('.'+base+' h1').remove();
         $('.'+base).prepend('<h1>' + year + '  ' + Calendar.month_name[month] + '</h1>');
     }
     getDateStorage(){
@@ -193,7 +193,9 @@ class Calendar {
     }
     putLabel(date, $obj){
         if(this.dataStorage.has(date)){
-            $obj.css('background-color', 'red');
+            $obj.css('background-color', '#e03a3a');
+        }else{
+            $obj.css('background-color', '#1f1f1f');
         }
     }
 }
@@ -207,13 +209,12 @@ cal.createCalendar();
 $('td').on('click', function (e) {
     let date_day = e.target.textContent;
     if(date_day > 0 && date_day <= 31){
-        let string = $('.box h1').text();
+        let string = $('.'+cal.baseEl+' h1').text();
         let date_arr = string.split(' ');
         let date_year = date_arr[0];
         let date_month = date_arr[2];
 
          // key of map in format dd.mm.yyyy
         let key = date_day + '.' + Calendar.month_name.indexOf(date_month) + '.' + date_year;
-        console.log(cal.getNoteFromDataStorage(key));
     }
 })
